@@ -13,3 +13,17 @@ class FieldElement :
         if other is None :
             return False
         return self.num == other.num and self.prime == other.prime
+
+
+    def __ne__(self,other):
+        if other is None :
+            return False
+        return self.num != other.num or self.prime != other.prime
+
+
+    def __add__(self,other):
+        if self.prime != other.prime:
+            raise TypeError("Cannot add two numbers in different fields")
+        num = (self.num + other.num)%self.prime
+        return self.__class__(num,self.prime) # Note that we could use FieldElement instead of self.__class__, but this would not make the method easily inheritable.
+        # We will be subclassing FieldElement later, so making the method inheritable is important here.
